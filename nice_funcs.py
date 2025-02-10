@@ -15,14 +15,31 @@ from py_clob_client.client import ClobClient
 from py_clob_client.constants import POLYGON
 from py_clob_client.order_builder.constants import BUY
 from py_clob_client.clob_types import ApiCreds, OrderArgs, OrderType
+import re
 
-user_address = '0x9d84ce0306f8551e02efef1680475fc0f1dc1344'
+user_address = os.getenv('PROXY_WALLET')
+
+def scrape_build_id(url):
+    try:
+        # Send a GET request to the URL
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for bad status codes
+
+        # Search for the buildId pattern in the response text
+        match = re.search(r'"buildId":\s?"(.*?)"', response.text)
+        if match:
+            return match.group(1)  # Return the captured buildId
+        else:
+            return "buildId not found"  # Or something nullable
+    except requests.RequestException as e:
+        return f"An error occurred: {e}"
+
 
 # returns proxy wallet dictionary / saves to proxy_wallets.py
 def fetch_leaderboard() -> list:
     # The URL to fetch the leaderboard data - the URL will change from time to time
     #NOTE: the URL Changes -- Should probably look into this
-    url = 'https://polymarket.com/_next/data/Qiek3ZtiJbjD_PULr6g8h/en/leaderboard.json'
+    url = f'https://polymarket.com/_next/data/{scrape_build_id("https://polymarket.com/leaderboard")}/en/leaderboard.json'
 
     # Making the GET request to fetch the leaderboard data
     response = requests.get(url)

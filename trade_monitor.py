@@ -10,12 +10,13 @@ If trades pass the filtering, they are appended to a JSON file called tail_trade
 '''
 
 import time
+
+import nice_funcs
 import nice_funcs as n
 from threading import Thread
-from proxy_wallets import proxy_wallets
 
 
-proxy_wallets = proxy_wallets
+proxy_wallets = nice_funcs.fetch_leaderboard()
 
 def monitor_wallet(user_address):
     print(f"Monitoring trades for wallet: {user_address}")
@@ -68,7 +69,7 @@ def monitor_wallet(user_address):
 
 def main():
     # # List of wallet addresses
-    # proxy_wallets = proxy_wallets
+    proxy_wallets = nice_funcs.fetch_leaderboard()
     
     # Create and start a thread for each wallet address
     threads = []
