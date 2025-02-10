@@ -10,8 +10,10 @@ Some markets in Polymarket will not allow you to submit Orders for less than a L
 import time
 import nice_funcs as n
 from py_clob_client.exceptions import PolyApiException
+import os
 
-user_address = '0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4'
+dvdk_user_address = '0xF388992b98560E76bA40D46DB5d26b822045Da43'
+user_address = os.getenv('PROXY_WALLET')
 
 # Set Take Profit and Stop Loss Parameters
 take_profit = 10
@@ -20,7 +22,7 @@ stop_loss = -7
 
 def risk_management_looper(user_address: str):
 
-    client = n.create_clob_client('0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4')
+    client = n.create_clob_client(os.getenv('PROXY_WALLET'))
     user_positions = n.fetch_user_positions(user_address, limit = 500)
     # 1. Get Active Positions
     # active_positions = n.get_active_positions(n.fetch_user_positions(user_address, limit = 500))

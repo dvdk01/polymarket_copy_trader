@@ -8,8 +8,9 @@ import multiprocessing
 import trade_tailer as trader
 import risk_manager
 import trade_monitor
+import os
 
-user_address = '0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4'
+user_address = os.getenv('PROXY_WALLET')
 
 def run_trade_monitor():
     trade_monitor.main()

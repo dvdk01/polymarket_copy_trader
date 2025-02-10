@@ -66,8 +66,9 @@ def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours
         # if 'bot_executed' in trade and trade['bot_executed'] is False and trade['type'] == 'TRADE':
         # if not trade.get('bot_executed', False):  # Default to True if key is missing
 
-            my_balance = n.get_wallet_balance('0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4')
-            trade_risk = 0.15
+            my_balance = n.get_wallet_balance(os.getenv('PROXY_WALLET'))
+            # trade_risk = 0.15
+            trade_risk = 0.05
             risk_size = my_balance * trade_risk
             print(f'Risk Size USD is: {risk_size}') ## type -> float
             # Extract trade details
@@ -80,7 +81,7 @@ def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours
             side = trade['side']
             asset = trade['asset']
 
-            user_address='0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4'
+            user_address=os.getenv('PROXY_WALLET')
             active_positions = n.fetch_user_positions(user_address, limit = 500)
             print(active_positions.empty)
             # active_positions = n.get_active_positions(n.fetch_user_positions(user_address, limit = 500))
@@ -161,8 +162,10 @@ def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours
 
 
 def run_trade_tailer():
-    json_file_path = '/Users/joshbazz/Desktop/Bootcamp/Capstone_Project/tail_trades.json'
-    client = n.create_clob_client('0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4')
+    json_file_path = 'tail_trades.json'
+    # json_file_path = '/Users/joshbazz/Desktop/Bootcamp/Capstone_Project/tail_trades.json'
+
+    client = n.create_clob_client(os.getenv('PROXY_WALLET'))
     # Run the process_trades function continuously in a loop
     while True:
         process_trades(json_file_path, client)
@@ -173,7 +176,7 @@ if __name__ == "__main__":
     # Replace with the path to your JSON file
     json_file_path = 'tail_trades.json'
     
-    client = n.create_clob_client('0x90e9bF6c345B68eE9fd8D4ECFAddb7Ee4F14c8f4')
+    client = n.create_clob_client(os.getenv('PROXY_WALLET'))
 
     # Run the process_trades function continuously in a loop
     while True:
