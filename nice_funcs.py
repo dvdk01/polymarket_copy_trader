@@ -393,7 +393,7 @@ def connect_to_polygon() -> Web3:
     return web3
 
 
-def get_wallet_balance(user_address: str, max_retries=5, retry_delay=10) -> float:
+def get_wallet_balance(user_address: str, max_retries=5, retry_delay=5) -> float:
     web3 = connect_to_polygon()
 
     retries = 0

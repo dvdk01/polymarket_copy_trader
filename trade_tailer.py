@@ -39,7 +39,7 @@ def kill_switch():
     pass
 
 # Function to process trades
-def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours=24):
+def process_trades(json_file_path, client, sleep_duration=5, too_long_ago_hours=24):
     while not os.path.exists(json_file_path):
         print(f"File {json_file_path} not found. Waiting for {sleep_duration} seconds...")
         time.sleep(sleep_duration)
@@ -158,7 +158,7 @@ def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours
 
     print("All trades scanned, and updated or passed. Sleeping for 30 seconds.")
     print('----------------------------------------------------------------------')
-    time.sleep(30)  # Pause before the next iteration
+    time.sleep(5)  # Pause before the next iteration
 
 
 def run_trade_tailer():
