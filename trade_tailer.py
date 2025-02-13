@@ -68,7 +68,7 @@ def process_trades(json_file_path, client, sleep_duration=60, too_long_ago_hours
 
             my_balance = n.get_wallet_balance(os.getenv('PROXY_WALLET'))
             # trade_risk = 0.15
-            trade_risk = 0.05
+            trade_risk = 0.1
             risk_size = my_balance * trade_risk
             print(f'Risk Size USD is: {risk_size}') ## type -> float
             # Extract trade details
